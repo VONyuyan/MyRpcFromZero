@@ -26,4 +26,10 @@ public class UserServiceImpl implements UserService {
                 .sex(random.nextBoolean()).build();
         return user;
     }
+
+    @Override
+    public Integer insertUserId(User user) {
+        System.out.println("插入数据成功："+user);
+        return 1;
+    }
 }

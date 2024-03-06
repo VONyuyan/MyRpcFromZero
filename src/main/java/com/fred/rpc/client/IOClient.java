@@ -1,4 +1,4 @@
-package com.fred.rpc;
+package com.fred.rpc.client;
 
 import com.fred.rpc.pojo.RPCRequest;
 import com.fred.rpc.pojo.RPCResponse;

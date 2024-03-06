@@ -1,14 +1,10 @@
-package com.fred.rpc;
+package com.fred.rpc.client;
 
+import com.fred.rpc.pojo.Blog;
 import com.fred.rpc.pojo.ClientProxy;
 import com.fred.rpc.pojo.User;
+import com.fred.rpc.service.BlogService;
 import com.fred.rpc.service.UserService;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.Random;
 
 /**
  * ClassName: RPCClient
@@ -31,5 +27,10 @@ public class RPCClient {
         User user = User.builder().userName("张三").id(100).sex(true).build();
         Integer integer = proxy.insertUserId(user);
         System.out.println("向服务端插入数据："+integer);
+
+        // 客户中添加新的测试用例
+        BlogService blogService = clientProxy.getProxy(BlogService.class);
+        Blog blogById = blogService.getBlogById(10000);
+        System.out.println("从服务端得到的blog为：" + blogById);
     }
 }

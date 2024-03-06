@@ -1,6 +1,6 @@
 package com.fred.rpc.pojo;
 
-import com.fred.rpc.IOClient;
+import com.fred.rpc.client.IOClient;
 import lombok.AllArgsConstructor;
 
 import java.lang.reflect.InvocationHandler;

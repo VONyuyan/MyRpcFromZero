@@ -1,4 +1,4 @@
-package com.fred.rpc.util;
+package com.fred.rpc.util.serialize;
 
 /**
  * ClassName: JsonSerializer
@@ -19,7 +19,7 @@ import com.fred.rpc.pojo.RPCResponse;
  * 由于json序列化的方式是通过把对象转化成字符串，丢失了Data对象的类信息，所以deserialize需要
  * 了解对象对象的类信息，根据类信息把JsonObject -> 对应的对象
  */
-public class JsonSerializer implements Serializer{
+public class JsonSerializer implements Serializer {
     @Override
     public byte[] serialize(Object obj) {
         byte[] bytes = JSONObject.toJSONBytes(obj);

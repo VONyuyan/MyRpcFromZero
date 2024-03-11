@@ -28,7 +28,7 @@ public class TestServer {
         // 暴露两个服务接口， 即在RPCServer中加一个HashMap
         // serviceProvide.put("com.fred.rpc.service.UserService",userService);
         // serviceProvide.put("com.fred.rpc.service.BlogService",blogService);
-        ServiceProvider serviceProvider = new ServiceProvider();
+        ServiceProvider serviceProvider = new ServiceProvider("127.0.0.1", 8899);
         serviceProvider.provideServiceInterface(userService);
         serviceProvider.provideServiceInterface(blogService);
 

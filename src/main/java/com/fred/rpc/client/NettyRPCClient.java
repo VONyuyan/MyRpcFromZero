@@ -12,6 +12,8 @@ package com.fred.rpc.client;
 
 import com.fred.rpc.pojo.RPCRequest;
 import com.fred.rpc.pojo.RPCResponse;
+import com.fred.rpc.util.register.ServiceRegister;
+import com.fred.rpc.util.register.ZkServiceRegister;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -19,6 +21,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
+
+import java.net.InetSocketAddress;
 
 /**
  * 实现RPCClient接口
@@ -28,9 +32,11 @@ public class NettyRPCClient implements RPCClient {
     private static final EventLoopGroup eventLoopGroup;
     private String host;
     private int port;
-    public NettyRPCClient(String host, int port) {
-        this.host = host;
-        this.port = port;
+
+    private ServiceRegister serviceRegister;
+    public NettyRPCClient() {
+        // 初始化注册中心，建立连接
+        this.serviceRegister = new ZkServiceRegister();
     }
     // netty客户端初始化，重复使用
     static {
@@ -43,8 +49,14 @@ public class NettyRPCClient implements RPCClient {
     /**
      * 这里需要操作一下，因为netty的传输都是异步的，你发送request，会立刻返回， 而不是想要的相应的response
      */
+    // 客户端发起一次请求调用，Socket建立连接，发起请求Request，得到响应Response
+    // 这里的request是封装好的，不同的service需要进行不同的封装， 客户端只知道Service接口，需要一层动态代理根据反射封装不同的Servic
     @Override
     public RPCResponse sendRequest(RPCRequest request) {
+        // 从注册中心获取host，port
+        InetSocketAddress address = serviceRegister.serviceDiscovery(request.getInterfaceName());
+        host = address.getHostName();
+        port = address.getPort();
         try {
             ChannelFuture channelFuture  = bootstrap.connect(host, port).sync();
             Channel channel = channelFuture.channel();

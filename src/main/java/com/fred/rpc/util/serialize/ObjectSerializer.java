@@ -1,4 +1,4 @@
-package com.fred.rpc.util;
+package com.fred.rpc.util.serialize;
 
 import java.io.*;
 
@@ -11,7 +11,7 @@ import java.io.*;
  * @Create 2024/3/8 14:58
  * @Version 1.0
  */
-public class ObjectSerializer implements Serializer{
+public class ObjectSerializer implements Serializer {
 
     // 利用java IO 对象 -> 字节数组
     @Override

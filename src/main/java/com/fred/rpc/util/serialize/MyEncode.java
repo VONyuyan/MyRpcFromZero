@@ -1,4 +1,4 @@
-package com.fred.rpc.util;
+package com.fred.rpc.util.serialize;
 
 /**
  * ClassName: MyEncode

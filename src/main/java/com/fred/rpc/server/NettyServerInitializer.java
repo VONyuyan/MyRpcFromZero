@@ -11,17 +11,12 @@ package com.fred.rpc.server;
  */
 
 import com.fred.rpc.service.ServiceProvider;
-import com.fred.rpc.util.JsonSerializer;
-import com.fred.rpc.util.MyDecode;
-import com.fred.rpc.util.MyEncode;
+import com.fred.rpc.util.serialize.JsonSerializer;
+import com.fred.rpc.util.serialize.MyDecode;
+import com.fred.rpc.util.serialize.MyEncode;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.serialization.ClassResolver;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import lombok.AllArgsConstructor;
 
 /**

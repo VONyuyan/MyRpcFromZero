@@ -1,5 +1,7 @@
 package com.fred.rpc.util.register;
 
+import com.fred.rpc.util.balance.LoadBalance;
+import com.fred.rpc.util.balance.RandomLoadBalance;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -24,6 +26,8 @@ public class ZkServiceRegister implements ServiceRegister{
     // zookeeper根路径节点
     private static final String ROOT_PATH = "MyRPC";
 
+    // 初始化负载均衡器， 这里用的是随机， 一般通过构造函数传入
+    private LoadBalance loadBalance = new RandomLoadBalance();
     // 这里负责zookeeper客户端的初始化，并与zookeeper服务端建立连接
     public ZkServiceRegister(){
         // 指数时间重试
@@ -59,7 +63,7 @@ public class ZkServiceRegister implements ServiceRegister{
         try {
             List<String> strings = client.getChildren().forPath("/" + serviceName);
             // 这里默认用的第一个，后面加负载均衡
-            String string = strings.get(0);
+            String string = loadBalance.balance(strings);
             return parseAddress(string);
         } catch (Exception e) {
             e.printStackTrace();
